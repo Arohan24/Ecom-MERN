@@ -25,7 +25,7 @@ exports.getAllProducts = async (req, res, next) => {
     next(error); // Pass error to the error handling middleware
   }
 };
-
+//Find one and Update
 exports.updateProduct = async (req, res, next) => {
   let product = Product.findById(req.params.id);
   if (!product) {
