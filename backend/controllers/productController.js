@@ -40,7 +40,7 @@ exports.updateProduct = async (req, res, next) => {
     useFindAndModify: false,
   });
 
-  req.status(200).json({
+  res.status(200).json({
     success:true,
     product
   })
