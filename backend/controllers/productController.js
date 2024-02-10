@@ -1,18 +1,5 @@
 const Product = require("../models/productModels");
 
-// Create Product
-exports.createProduct = async (req, res, next) => {
-  try {
-    const product = await Product.create(req.body);
-    res.status(201).json({
-      success: true,
-      product,
-    });
-  } catch (error) {
-    next(error); // Pass error to the error handling middleware
-  }
-};
-
 // Get all products
 exports.getAllProducts = async (req, res, next) => {
   try {
@@ -25,7 +12,19 @@ exports.getAllProducts = async (req, res, next) => {
     next(error); // Pass error to the error handling middleware
   }
 };
-//Find one and Update
+// Create Product
+exports.createProduct = async (req, res, next) => {
+  try {
+    const product = await Product.create(req.body);
+    res.status(201).json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    next(error); // Pass error to the error handling middleware
+  }
+};
+//Find one and Update By ID
 exports.updateProduct = async (req, res, next) => {
   let product = Product.findById(req.params.id);
   if (!product) {
@@ -45,3 +44,19 @@ exports.updateProduct = async (req, res, next) => {
     product
   })
 };
+//Delete Product
+exports.deleteProduct=async (req,res,next) => {
+  const productId=req.params.id;
+  const product= await Product.findByIdAndDelete(productId);
+  if(!product){
+    return res.status(500).json({
+      success:false,
+      message:"Product Not Found"
+    })
+  }
+  res.status(200).json({
+    success:true,
+    message:"Product Deleted Sucessfully",
+    product
+  })
+}
