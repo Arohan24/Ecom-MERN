@@ -40,9 +40,9 @@ exports.updateProduct = async (req, res, next) => {
   });
 
   res.status(200).json({
-    success:true,
-    product
-  })
+    success: true,
+    product,
+  });
 };
 //Delete Product
 exports.deleteProduct = async (req, res, next) => {
@@ -53,20 +53,20 @@ exports.deleteProduct = async (req, res, next) => {
     if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Product Not Found"
+        message: "Product Not Found",
       });
     }
 
     res.status(200).json({
       success: true,
       message: "Product Deleted Successfully",
-      product: product
+      product: product,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      error: "Server Error"
+      error: "Server Error",
     });
   }
 };
