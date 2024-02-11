@@ -57,7 +57,6 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
 
 //Delete Product
 exports.deleteProduct = catchAsyncError(async (req, res, next) => {
-  
   const productId = req.params.id;
   const product = await Product.findByIdAndDelete(productId);
 
@@ -70,6 +69,4 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     message: "Product Deleted Successfully",
     product: product,
   });
-
-}
-);
+});
