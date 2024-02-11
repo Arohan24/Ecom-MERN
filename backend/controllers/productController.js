@@ -12,6 +12,30 @@ exports.getAllProducts = async (req, res, next) => {
     next(error); // Pass error to the error handling middleware
   }
 };
+//Get Product details
+exports.getOneProduct = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (!product) {
+      res.status(500).json({
+        success: false,
+        message: "Product Not Found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
 // Create Product
 exports.createProduct = async (req, res, next) => {
   try {
