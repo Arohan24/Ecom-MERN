@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 const validator=require("validator");
-
+const bcrypt=require("bcryptjs");
 const userSchema=new mongoose.Schema(
 {
    name:{
@@ -11,13 +11,13 @@ const userSchema=new mongoose.Schema(
    },
    email:{
     type:String,
-    required:[true,"Please Enter Your Name"],
+    required:[true,"Please Enter Your Email"],
     unique:true,
     validate:[validator.isEmail,"Please Enter a valid Email"]
    },
    password:{
     type:String,
-    reqired:[true,"Please Enter Your Password"],
+    required:[true,"Please Enter Your Password"],
     minLength:[8,"Password should be greater Than 8 characters"],
     select:false,
 
@@ -40,5 +40,13 @@ const userSchema=new mongoose.Schema(
     resetPasswordToken:String,
     resetPasswordExpire:Date,
    } 
-)
+);
+userSchema.pre("save",async function(next){
+    if(!this.isModified("password")){
+        next();
+    }
+  this.password= await bcrypt.hash(this.password,10);
+})
+
+//JWT token
 module.exports=mongoose.model("User",userSchema);
