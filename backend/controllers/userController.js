@@ -35,13 +35,12 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
   sendToken(user,200,res);
-  console.log('Signed Cookies: ', req.signedCookies)
-  console.log("token",req.cookies);
+  
 });
 
 //Logout User
 exports.logOut = catchAsyncError(async (req, res, next) => {
-  res.cookie("token","",{ 
+  res.cookie("token",null,{ 
    expires : new Date(Date.now()) ,httpOnly: true })
 
    res.status(200).json({
