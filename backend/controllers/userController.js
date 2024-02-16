@@ -3,8 +3,9 @@ const catchAsyncError = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModels");
 const sendToken = require("../utils/jwtToken");
 const sendEmail=require("../utils/sendEmail");
-//Register User
+const crypto=require("crypto");
 
+//Register User
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   const user = await User.create({
@@ -36,6 +37,31 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   }
   sendToken(user,200,res);
   
+});
+
+//Reset Password
+exports.resetPassword = catchAsyncError( async (req, res ,next)=>{
+  const resetPasswordToken=crypto
+  .createHash( 'sha256' )
+  .update(req.params.token)
+  .digest("hex");
+
+  const user=await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire:{ $gt : Date.now()},
+  })
+  if(!user){
+    return next( new ErrorHandler('Password reset token is invalid or expired',400))
+  }
+  if(req.body.password !== req.body.confirmPassword){
+    return next(new ErrorHandler('Passwords do not match',400))
+  }else{
+    user.password=req.body.password;
+    user.resetPasswordToken=undefined;
+    user.resetPasswordExpire= undefined;
+    await user.save();
+    sendToken(user,200,res);
+  }
 });
 
 //Logout User
@@ -78,4 +104,30 @@ exports.forgotPassword=catchAsyncError( async (req,res,next)=>{
     await user.save({validateBeforeSave: false});
     return next(new ErrorHandler(error.message,500));
   }
+});
+
+//Get User Details
+exports.getUserDetails = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  
+  res.status(200).json({
+    sucess:true,
+    user,
+  })
+});
+
+//Update Users Password
+exports.updatePassword = catchAsyncError( async (req,res,next)=> {
+  const user = await User.findById(req.user.id).select('+password');
+  //Checking current password is correct or not
+  const ispasswordMatched = await user.comparePassword(req.body.oldPassword);
+  if (!ispasswordMatched) {
+    return next(new ErrorHandler("Invalid email or password", 401));
+  }
+  if(req.body.newPassword !==req.body.confirmPassword){
+    return next(new ErrorHandler("Password does not match", 400));
+  }
+  user.password= req.body.newPassword;
+  await user.save();
+  sendToken(user, 200, res);
 });

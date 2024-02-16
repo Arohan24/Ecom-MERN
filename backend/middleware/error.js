@@ -27,7 +27,19 @@ if (err.name === "MongoNetworkError") {
   const message = "MongoDB connection error. Please check your network connection and try again.";
   error = new ErrorHandler(message, 500);
 }
-  
+
+//Wrong JWT Error
+if (err.name === "JsonWebTokenError") {
+  const message = "Invalid token. Please login to get a valid token.";
+  error = new ErrorHandler(message, 401);
+}
+
+//JWT Expire Error
+if (err.name === "TokenExpiredError") {
+  const message = "Your session has expired. Please login to continue.";
+  error = new ErrorHandler(message, 401);
+}
+
 // Handle other MongoDB errors
 if (err.name === "MongoError") {
   if (err.code === 11000) { // Duplicate key error
