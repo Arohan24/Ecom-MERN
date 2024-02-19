@@ -185,3 +185,47 @@ exports.getSingleUser = catchAsyncError(async (req, res, next) => {
     data: user,
   });
 });
+
+//Update User Role (admin)
+exports.updateUserRole = catchAsyncError(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name || req.user.name,
+    email: req.body.email || req.user.email,
+    role: req.body.role,
+  };
+  const newUserOptions = {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  };
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    newUserData,
+    newUserOptions
+  );
+
+  if(!user) {
+    return next(new ErrorHandler('No user with this id', 404))
+  }
+  
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+//Delete User  (Admin only)
+exports.deleteUser = catchAsyncError(async (req, res, next) => {
+  const user=await User.findByIdAndDelete(req.params.id);
+  //Delete cloudinary code goes here
+
+  if(!user){
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+})

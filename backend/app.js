@@ -9,9 +9,9 @@ app.use(express.json());
 app.use(cookieParser());
 // Routes 
 const productRoutes = require("./routes/productRoute");
-const user=require("./routes/userRoute")
+const userRoutes=require("./routes/userRoute")
 app.use("/api/v1", productRoutes);
-app.use("/api/v1",user)
+app.use("/api/v1",userRoutes)
 
 
 app.use(errorMiddleware);
