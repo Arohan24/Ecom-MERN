@@ -5,7 +5,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 // Get all products
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
   const resultPerPage = 2;
-  const productCount=Product.countDocuments();
+  const productCount = Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
@@ -32,7 +32,7 @@ exports.getOneProduct = catchAsyncError(async (req, res, next) => {
 });
 
 // Create Product
-exports.createProduct = catchAsyncError(async (req, res, next) => { 
+exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await Product.create(req.body);
   res.status(201).json({
@@ -73,5 +73,48 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Product Deleted Successfully",
     product: product,
+  });
+});
+
+//Create New Product Review or Update Product Review
+exports.createProductReview = catchAsyncError(async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+  
+  const product = await Product.findById(productId);
+  //Checking if the user has already given a review to this product
+
+  const isReviewed = product.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((rev) => {
+      if (rev.user.toString() === req.user._id.toString())
+        (rev.rating = rating), (rev.comment = comment);
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+  let avg = 0;
+
+  product.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  product.ratings = avg / product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    review
   });
 });
