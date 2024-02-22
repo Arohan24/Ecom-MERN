@@ -1,6 +1,6 @@
 const express=require("express");
 
-const { getAllProducts ,createProduct, updateProduct, deleteProduct, getOneProduct, createProductReview} = require("../controllers/productController");
+const { getAllProducts ,createProduct, updateProduct, deleteProduct, getOneProduct, createProductReview, deleteProductReview, getAllReviews} = require("../controllers/productController");
 const {isAuthenticatedUser, authorizeRole}=require("../middleware/auth");
 
 const router=express.Router();
@@ -16,5 +16,8 @@ router.route("/product/:id").delete(isAuthenticatedUser,authorizeRole("admin"),d
 router.route("/product/:id").get(getOneProduct);
 //Create or update a review on a single product route
 router.route("/product/customer/review").put(isAuthenticatedUser,createProductReview);
- 
+//Get all Product reviews for one product
+router.route('/product/customer/reviews').get(getAllReviews)
+//Delete  the Review of a user from a particular product
+router.route("/product/customer/review").delete(isAuthenticatedUser,deleteProductReview);
 module.exports=router

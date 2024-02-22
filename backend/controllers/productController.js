@@ -86,7 +86,7 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
     rating: Number(rating),
     comment,
   };
-  
+
   const product = await Product.findById(productId);
   //Checking if the user has already given a review to this product
 
@@ -115,6 +115,60 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    review
+    review,
+  });
+});
+
+//Get All Reviews
+exports.getAllReviews = catchAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.productId);
+
+  if (!product) {
+    return next(new ErrorHandler("No product found with that ID", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+  });
+});
+//Delete Product  Review
+exports.deleteProductReview = catchAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.productId);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not Found", 404));
+  }
+
+  //Delete Review
+  const reviews = product.reviews.filter(
+    (r) => r._id.toString() !== req.query.reviewId.toString()
+  );
+
+  //Aggregate the remaining reviews to calculate the new ratings
+  let avg = 0;
+  if (reviews.length > 0) {
+    reviews.forEach((rev) => {
+      avg += rev.rating;
+    });
+    const ratings = avg / reviews.length;
+    numOfReviews = reviews.length;
+    await Product.findByIdAndUpdate(
+      req.query.productId,
+      { reviews, ratings, numOfReviews },
+      { new: true, runValidators: true, useFindAndModify: false }
+    );
+  } else {
+    // If there are no remaining reviews, set the ratings to the previous value
+    await Product.findByIdAndUpdate(
+      req.query.productId,
+      { reviews, ratings: product.ratings, numOfReviews: product.numOfReviews },
+      { new: true, runValidators: true, useFindAndModify: false }
+    );
+  }
+
+  res.status(204).json({
+    success: true,
+    message: "review deleted",
   });
 });
