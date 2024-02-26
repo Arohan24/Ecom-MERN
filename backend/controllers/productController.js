@@ -132,6 +132,7 @@ exports.getAllReviews = catchAsyncError(async (req, res, next) => {
     reviews: product.reviews,
   });
 });
+
 //Delete Product  Review
 exports.deleteProductReview = catchAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
