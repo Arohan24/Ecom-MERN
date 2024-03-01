@@ -80,6 +80,10 @@ exports.getAllOrders = catchAsyncError(async (req, res, next) => {
 exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
+  if(!order || order.length===0){
+    return next( new ErrorHandler('No such order found',404))
+  }
+
   if(order.orderStatus === "Delivered"){
     return next(new ErrorHandler("You have already delivered this  order",400));
   }
@@ -101,6 +105,22 @@ exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
   }); 
 });
  
+//Delete Orders (Admin)
+exports.deleteOrders = catchAsyncError(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  
+  if(!order || order.length===0){
+    return next( new ErrorHandler('No such order found',404))
+  }
+  await order.deleteOne();
+  
+  res.status(200).json({
+    success: true,
+    count: order.length,
+    data: order,
+  });
+});
+
 async  function updateStock(product, quantity){
    const products=await Product.findById(product);
    if (!products) {
@@ -108,20 +128,4 @@ async  function updateStock(product, quantity){
   }
    products.Stock-=quantity;
    await products.save({validateBeforeSave:false});
-}
-
-//Delete Orders (Admin)
-exports.deleteOrders = catchAsyncError(async (req, res, next) => {
-  const order = await Order.findById(req.params.id);
-
-  if(!order || order.length===0){
-     return next( new ErrorHandler('No such order found',404))
-  }
-  await order.deleteOne();
-
-  res.status(200).json({
-    success: true,
-    count: order.length,
-    data: order,
-  });
-});
+} 
