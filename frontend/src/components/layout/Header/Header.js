@@ -1,11 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { ReactNavbar } from "overlay-navbar";
-import WebFont from "webfontloader";
-import logo from "../../../Images/Logo.png"
+import logo from "../../../images/logo.png";
+
 const options = {
-  logo:logo,
   burgerColorHover: "#eb4034",
+  logo,
   logoWidth: "20vmax",
   navColor1: "white",
   logoHoverSize: "10px",
@@ -35,17 +34,9 @@ const options = {
   cartIconColorHover: "#eb4034",
   cartIconMargin: "1vmax",
 };
+
 const Header = () => {
-  // Load fonts for the website
-  WebFont.load({
-    google: { families: ["Roboto", "Droid  Ssns", "Chilanka"] },
-  });
-  
-  return (
-    <Router>
-      <ReactNavbar {...options} />
-    </Router>
-  );
+  return <ReactNavbar {...options} />;
 };
 
 export default Header;

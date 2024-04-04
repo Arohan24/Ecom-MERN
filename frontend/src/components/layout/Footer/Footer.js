@@ -1,6 +1,6 @@
 import React from "react";
-import playStore from "../../../Images/playstore.png";
-import appStore from "../../../Images/Appstore.png";
+import playStore from "../../../images/playstore.png";
+import appStore from "../../../images/Appstore.png";
 import "./Footer.css";
 
 const Footer = () => {
@@ -22,9 +22,9 @@ const Footer = () => {
 
       <div className="rightFooter">
         <h4>Follow Us</h4>
-        <a href="">Instagram</a>
-        <a href="">Youtube</a>
-        <a href="">Facebook</a>
+        <a href="http://instagram.com/meabhisingh">Instagram</a>
+        <a href="http://youtube.com/6packprogramemr">Youtube</a>
+        <a href="http://instagram.com/meabhisingh">Facebook</a>
       </div>
     </footer>
   );

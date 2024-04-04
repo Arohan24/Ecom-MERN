@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+:root {
+    --primary-color: #5D0E41;
+    --background-color: #ff204e;
+    --hover-color: #fff;
+    --light-bg-color:#FFF455;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  .playfairFont{
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+.montserratFont {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+body {
+  font-family: 'Playfair Display', sans-serif;
+  background-color: var(--light-bg-color);
+  min-height: 100vh;
+}
+
+/* -----------------------Navbar styles ----------------------------- */
+/* Navbar styles */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  z-index: 10000;
+}
+
+  
+  /* Logo styles */
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-left: 5px;
+    color: var(--primary-color);
+  }
+  .logo li{
+    list-style-type: none;
+  }
+  .logo li a{
+    text-decoration: none;
+    color: var(--primary-color);
+  }
+  /* Navigation links styles */
+  .nav-links div{
+    list-style-type: none;
+    display: inline-flex;
+    align-items: center; /* Ensure vertical alignment */
+    margin: 0px 2px;
+  }
+  .nav-links {
+    margin-right: 5px;
+  }
+  .nav-links li {
+    margin:0px 5px;
+    font-weight: 600;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0; /* Remove margin from the last item */
+  }
+  
+  .nav-links li a {
+    color:var(--primary-color);
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Align items vertically */
+  }
+  
+  /* Hover styles */
+  .nav-links li a:hover {
+    color: var(--hover-color);
+    background-color: var(--primary-color);
+    transition: ease-in-out all .4s;
+  }
+  
+  /* Icon styles */
+  .icon {
+    margin-right: 5px; /* Add spacing between icon and text */
+  }
+  .mq-icon li a svg{
+    fill: var(--primary-color);
+  }
+  .mq-icon input {
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    outline: none;
+    background-color: white;
+    color:var(--primary-color);
+}
+  .mq-icon li:hover a svg path{
+    background-color: var(--hover-color);
+    fill: var(--hover-color);
+  } 
+  
+  /*----------------Navbar Styles End Here ----------------------------*/
+
+
+  /*-------------------------Home Page Css ----------------------------*/
+.containerHome{
+  background-color: var(--light-bg-color);
+}
+.containerHome h1,h3{
+  text-align: center;
+ 
+}
+
+
+  /*--------------------Login Signup Css-------------------------------*/
+
+  /* Container Styles */
+.containerLogin {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--hover-color);
+    opacity: 0.85;
+    padding: 10px 0px;
+}
+
+/* Form Styles */
+.form-container {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    
+}
+.form-container h1{
+  color: var(--primary-color) ;
+}
+
+/* Lock Icon Styles */
+.lock-icon {
+    background-color: var(--background-color);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-icon img {
+    width: 60px;
+    height: 60px;
+}
+
+/* Form Input Styles */
+.input-field {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+.link-style{
+  list-style: none;
+}
+.link-style li a{
+  text-decoration: none;
+}
+/* Checkbox Styles */
+.checkbox-container {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+/* Button Styles */
+.submit-button {
+    width: 65%;
+    padding: 12px;
+    background-color:var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 6px 0px;
+}
+.pointer{
+    cursor: pointer;
+    border-radius: 15px;
+}
+.pointer p{
+  display: flex;
+  list-style: none;
+}
+.pointer p a{
+  text-decoration: none;
+  padding: 0 2px;
+}
+
+/*---------------------------Login-SignUp CSS End------------------------*/
+
+/*---------------------------Card Group CSS-------------------------------*/
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--light-bg-color);
+  width: 50%;
+  background-color: var(--background-color);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+}
+
+.card:hover img{
+  background-color: var(--background-color);
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 22px;
+  margin-bottom: 8px;
+  font-family: 'Abril Fatface'
+}
+
+.card-description {
+  font-size: 20px;
+  color: #666;
+}
+.card_group{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.card_group .card {
+  flex: 1;
+  max-width: 300px;
+  margin: 20px;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  background-color: var(--background-color);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.card_group .card:hover {
+  transform: scale(1.10); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+  background-color:var(--primary-color);
+  color: var(--hover-color); 
+}
+
+.card:hover .card-description{
+  color: var(--hover-color);
+}
+
+/*-----------------------------Poster Home Css-------------------------*/
+.poster {
+  display: flex;
+  width: 100%;
+  margin: 15rem 0px;
+}
+
+.poster-image {
+  width: 60%; /* Adjust as needed */
+}
+
+.poster-content {
+  width: 30%; /* Adjust as needed */
+  margin: 0px 60px;
+}
+
+.leftPoster {
+  flex-direction: row;
+}
+
+.rightPoster {
+  flex-direction: row-reverse;
+}
+
+/* Additional styles for image */
+.poster-image img {
+  width: 100%;
+  height: auto;
+}
+.rightPoster .poster-content{
+  text-align: right;
+}
+/* Additional styles for content */
+.poster-content h2 {
+  font-size: 1.8rem;
+  font-family:"Abril Fatface","Montserrat", sans-serif;
+  margin-bottom: 20px;
+}
+
+.poster-content p {
+  font-size: 1.5rem;
+}
+
+/*--------------------------Poster Home Css end-------------------------*/
+
+/*--------------------------Contact Page Css start----------------*/
+.Contact-container{
+  max-width: 500px;
+  margin: 14px auto;
+  padding: 20px;
+  text-align: center;
+  width: -webkit-fill-available;
+  background-color: white;
+  opacity: 0.85;
+}
+.contactForm-group{
+  margin-bottom: 20px;
+}
+.contactForm-group label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+.contactForm-group input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+/*Background Image css for contact form*/
+
+.bg-image{
+    height: 50%;
+    width: 100%;
+    background-image: url("./images/BackgroundImages/ShoppingBackground.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+/*-----------------------Footer Css-------------------------*/
+
+.containerFooter{
+  background-color:var(--background-color);
+  color:var(--primary-color);
+  display: flex;
+  justify-content: space-evenly;
+  align-items:center;
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  position: relative; /* Ensure positioning works correctly */
+  bottom: 0; /* Stick footer to the bottom */
+  width: 100%; /* Full width */
+  
+}
+.footerIcons{
+  display: flex; 
+  justify-content: space-evenly;
+  align-items:center;
+  padding: 0px;
+}
+.footer-group{
+  display: block; 
+  
+}
+.footer-group li{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+/*--------------------------Footer End----------------------*/
+
